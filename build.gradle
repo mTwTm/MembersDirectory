@@ -16,7 +16,7 @@ javafx {
     modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
 
-mainClassName = 'org.openjfx.MainApp'
+mainClassName = 'org.mtwtm.MainApp'
 
 compileKotlin {
     kotlinOptions {
