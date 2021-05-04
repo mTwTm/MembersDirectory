@@ -66,6 +66,7 @@ class MainApp : Application() {
         } catch (ex: IOException) {
             showAlert(stage, strings.getString(CREATE_FAILURE), Alert.AlertType.ERROR)
             stage.close()
+            return
         }
         showAlert(stage, strings.getString(CREATE_SUCCESS), Alert.AlertType.INFORMATION)
         startMain(stage)
