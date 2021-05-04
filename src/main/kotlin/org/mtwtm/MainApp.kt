@@ -8,6 +8,7 @@ import javafx.scene.control.Alert
 import javafx.scene.control.Button
 import javafx.scene.control.TextField
 import javafx.scene.layout.Pane
+import javafx.scene.layout.Region
 import javafx.scene.layout.VBox
 import javafx.stage.Stage
 import org.mtwtm.data.User
@@ -33,15 +34,7 @@ class MainApp : Application() {
         navigateCreate.onMouseClicked = EventHandler {
             startCreate(stage)
         }
-        val vBox = VBox()
-        vBox.children.addAll(navigateCreate, navigateSearch)
-        VBox.setMargin(navigateCreate, INSET_50)
-        VBox.setMargin(navigateSearch, INSET_50)
-
-        navigateCreate.prefHeightProperty().bind(vBox.heightProperty().divide(2))
-        navigateCreate.prefWidthProperty().bind(vBox.widthProperty())
-        navigateSearch.prefHeightProperty().bind(vBox.heightProperty().divide(2))
-        navigateSearch.prefWidthProperty().bind(vBox.widthProperty())
+        val vBox = createEvenVBox(navigateSearch, navigateCreate, INSET_50)
         stage.scene = Scene(vBox, APP_WIDTH, APP_HEIGHT)
         stage.show()
     }
@@ -51,14 +44,7 @@ class MainApp : Application() {
         val searchContent = TextField()
         val searchButton = Button()
         searchButton.text = strings.getString(SEARCH)
-        val vBox = VBox()
-        vBox.children.addAll(searchContent, searchButton)
-        VBox.setMargin(searchContent, INSET_50)
-        VBox.setMargin(searchButton, INSET_50)
-        searchContent.prefHeightProperty().bind(vBox.heightProperty().divide(2))
-        searchContent.prefWidthProperty().bind(vBox.widthProperty())
-        searchButton.prefHeightProperty().bind(vBox.heightProperty().divide(2))
-        searchButton.prefWidthProperty().bind(vBox.widthProperty())
+        val vBox = createEvenVBox(searchContent, searchButton, INSET_50)
         searchButton.onMouseClicked = EventHandler {
             val user = repository.search(searchContent.text)
             if (user == null) {
@@ -90,6 +76,23 @@ class MainApp : Application() {
         alert.initOwner(owner)
         alert.contentText = title
         alert.showAndWait()
+    }
+
+    private fun createEvenVBox(regionA: Region, regionB: Region, margin: Insets?): VBox {
+        val vBox = VBox()
+
+        fun setProperties(region: Region) {
+            margin?.let {
+                VBox.setMargin(region, margin)
+            }
+            region.prefHeightProperty().bind(vBox.heightProperty().divide(2))
+            region.prefWidthProperty().bind(vBox.widthProperty())
+        }
+
+        vBox.children.addAll(regionA, regionB)
+        setProperties(regionA)
+        setProperties(regionB)
+        return vBox
     }
 
     companion object {
