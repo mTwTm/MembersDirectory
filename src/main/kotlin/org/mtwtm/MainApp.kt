@@ -15,6 +15,7 @@ import javafx.stage.Stage
 import org.mtwtm.data.User
 import org.mtwtm.repository.UserRepository
 import java.io.IOException
+import java.lang.StringBuilder
 import java.util.*
 
 class MainApp : Application() {
@@ -47,11 +48,11 @@ class MainApp : Application() {
         searchButton.text = strings.getString(SEARCH)
         val vBox = createEvenVBox(searchContent, searchButton, INSET_50)
         searchButton.onMouseClicked = EventHandler {
-            val user = repository.search(searchContent.text)
-            if (user == null) {
+            val userList = repository.search(searchContent.text)
+            if (userList.isEmpty()) {
                 showAlert(stage, strings.getString(NOT_FOUND), Alert.AlertType.WARNING)
             } else {
-                showAlert(stage, user.toShortString(), Alert.AlertType.INFORMATION)
+                showAlert(stage, userList.toUserListString(), Alert.AlertType.INFORMATION)
             }
             searchContent.clear()
             searchContent.requestFocus()
@@ -154,6 +155,11 @@ class MainApp : Application() {
         setProperties(regionB)
         return hBox
     }
+
+    private fun List<User>.toUserListString(): String = foldIndexed(StringBuilder()) { i, sb, u ->
+        sb.append('(').append(i).append(")\n")
+            .append(u.toUserString()).append('\n')
+    }.toString()
 
     companion object {
         const val APP_WIDTH = 640.0

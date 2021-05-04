@@ -6,32 +6,29 @@ import java.nio.file.Files
 import java.nio.file.Path
 
 class UserRepository(private val filePath: String) {
-    private val phoneToUser = mutableMapOf<String, User>()
-    private val cardToUser = mutableMapOf<String, User>()
-    private val nameToUser = mutableMapOf<String, User>()
-    private val otherToUser = mutableMapOf<String, User>()
+    private val phoneToUser = mutableMapOf<String, MutableList<User>>()
+    private val cardToUser = mutableMapOf<String, MutableList<User>>()
+    private val nameToUser = mutableMapOf<String, MutableList<User>>()
+    private val otherToUser = mutableMapOf<String, MutableList<User>>()
 
-    fun search(string: String): User? {
-        return searchByName(string)
-            ?: searchByPhone(string)
-            ?: searchByCard(string)
-            ?: searchByOther(string)
+    fun search(string: String): List<User> {
+        return searchByName(string) + searchByPhone(string) + searchByCard(string) + searchByOther(string)
     }
 
-    private fun searchByPhone(phoneNumber: String): User? {
-        return phoneToUser[phoneNumber]
+    private fun searchByPhone(phoneNumber: String): List<User> {
+        return phoneToUser[phoneNumber] ?: emptyList()
     }
 
-    private fun searchByCard(cardId: String): User? {
-        return cardToUser[cardId]
+    private fun searchByCard(cardId: String): List<User> {
+        return cardToUser[cardId] ?: emptyList()
     }
 
-    private fun searchByName(name: String): User? {
-        return nameToUser[name]
+    private fun searchByName(name: String): List<User> {
+        return nameToUser[name] ?: emptyList()
     }
 
-    private fun searchByOther(other: String): User? {
-        return otherToUser[other]
+    private fun searchByOther(other: String): List<User> {
+        return otherToUser[other] ?: emptyList()
     }
 
     fun insert(user: User) {
@@ -85,9 +82,9 @@ class UserRepository(private val filePath: String) {
         insertIfNotEmpty(otherToUser, user.other, user)
     }
 
-    private fun insertIfNotEmpty(map: MutableMap<String, User>, key: String, value: User) {
-        key.takeIf { it.isNotEmpty() }?.let {
-            map[it] = value
-        }
+    private fun insertIfNotEmpty(map: MutableMap<String, MutableList<User>>, key: String, value: User) {
+        val validKey = key.takeIf { it.isNotEmpty() } ?: return
+        map.putIfAbsent(validKey, mutableListOf())
+        checkNotNull(map[validKey]).add(value)
     }
 }
