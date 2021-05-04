@@ -162,21 +162,21 @@ class MainApp : Application() {
     }.toString()
 
     companion object {
-        const val APP_WIDTH = 640.0
-        const val APP_HEIGHT = 320.0
-        const val TITLE = "org.mtwtm.membersDirectory.title"
-        const val SEARCH = "org.mtwtm.membersDirectory.mode.search"
-        const val CREATE = "org.mtwtm.membersDirectory.mode.create"
-        const val NOT_FOUND = "org.mtwtm.membersDirectory.notFound"
-        const val CREATE_SUCCESS = "org.mtwtm.membersDirectory.createSuccess"
-        const val CREATE_FAILURE = "org.mtwtm.membersDirectory.createFailure"
-        const val FIELD_CARD = "org.mtwtm.membersDirectory.field.card"
-        const val FIELD_NAME = "org.mtwtm.membersDirectory.field.name"
-        const val FIELD_PHONE = "org.mtwtm.membersDirectory.field.phone"
-        const val FIELD_OTHER = "org.mtwtm.membersDirectory.field.other"
-        const val EMPTY_FIELD = "org.mtwtm.membersDirectory.emptyField"
-        val INSET_50 = Insets(50.0, 50.0, 50.0, 50.0)
-        val INSET_20 = Insets(20.0, 20.0, 20.0, 20.0)
-        const val DB = "membersDB"
+        private const val APP_WIDTH = 640.0
+        private const val APP_HEIGHT = 320.0
+        private const val TITLE = "org.mtwtm.membersDirectory.title"
+        private const val SEARCH = "org.mtwtm.membersDirectory.mode.search"
+        private const val CREATE = "org.mtwtm.membersDirectory.mode.create"
+        private const val NOT_FOUND = "org.mtwtm.membersDirectory.notFound"
+        private const val CREATE_SUCCESS = "org.mtwtm.membersDirectory.createSuccess"
+        private const val CREATE_FAILURE = "org.mtwtm.membersDirectory.createFailure"
+        private const val FIELD_CARD = "org.mtwtm.membersDirectory.field.card"
+        private const val FIELD_NAME = "org.mtwtm.membersDirectory.field.name"
+        private const val FIELD_PHONE = "org.mtwtm.membersDirectory.field.phone"
+        private const val FIELD_OTHER = "org.mtwtm.membersDirectory.field.other"
+        private const val EMPTY_FIELD = "org.mtwtm.membersDirectory.emptyField"
+        private val INSET_50 = Insets(50.0, 50.0, 50.0, 50.0)
+        private val INSET_20 = Insets(20.0, 20.0, 20.0, 20.0)
+        private const val DB = "membersDB"
     }
 }
