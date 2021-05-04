@@ -75,6 +75,14 @@ class MainApp : Application() {
     private fun startCreate(stage: Stage) {
         stage.title = strings.getString(CREATE)
         stage.scene = Scene(Pane(), APP_WIDTH, APP_HEIGHT)
+        try {
+            repository.insert(User("", "", "", "", System.currentTimeMillis()))
+        } catch (ex: IOException) {
+            showAlert(stage, strings.getString(CREATE_FAILURE), Alert.AlertType.ERROR)
+            stage.close()
+        }
+        showAlert(stage, strings.getString(CREATE_SUCCESS), Alert.AlertType.INFORMATION)
+        startMain(stage)
     }
 
     private fun showAlert(owner: Stage, title: String, type: Alert.AlertType) {
@@ -91,6 +99,8 @@ class MainApp : Application() {
         const val SEARCH = "org.mtwtm.membersDirectory.mode.search"
         const val CREATE = "org.mtwtm.membersDirectory.mode.create"
         const val NOT_FOUND = "org.mtwtm.membersDirectory.notFound"
+        const val CREATE_SUCCESS = "org.mtwtm.membersDirectory.createSuccess"
+        const val CREATE_FAILURE = "org.mtwtm.membersDirectory.createFailure"
         val INSET_50 = Insets(50.0, 50.0, 50.0, 50.0)
         const val DB = "membersDB"
     }
