@@ -40,7 +40,7 @@ class UserRepository(private val filePath: String) {
             throw IOException("File clone failed")
         }
         addUserToCache(user)
-        val bw = BufferedWriter(FileWriter(file, true))
+        val bw = BufferedWriter(FileWriter(file, Charsets.UTF_8, true))
         bw.write(user.toString())
         bw.newLine()
         bw.close()
@@ -56,7 +56,7 @@ class UserRepository(private val filePath: String) {
             file.createNewFile()
             insert(User("0000", "游騰保", "0987654321", "", 0))
         } else {
-            val br = BufferedReader(FileReader(file))
+            val br = BufferedReader(FileReader(file, Charsets.UTF_8))
             while (true) {
                 val line = br.readLine()?.takeIf { it.isNotEmpty() }?: break
                 val split = line.split(",")
