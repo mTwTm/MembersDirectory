@@ -8,6 +8,8 @@ import javafx.scene.control.Alert
 import javafx.scene.control.Button
 import javafx.scene.control.Label
 import javafx.scene.control.TextField
+import javafx.scene.input.KeyCode
+import javafx.scene.input.KeyEvent
 import javafx.scene.layout.HBox
 import javafx.scene.layout.Region
 import javafx.scene.layout.VBox
@@ -48,16 +50,25 @@ class MainApp : Application() {
         searchButton.text = strings.getString(SEARCH)
         val vBox = createEvenVBox(searchContent, searchButton, INSET_50)
         searchButton.onMouseClicked = EventHandler {
-            val userList = repository.search(searchContent.text)
-            if (userList.isEmpty()) {
-                showAlert(stage, strings.getString(NOT_FOUND), Alert.AlertType.WARNING)
-            } else {
-                showAlert(stage, userList.toUserListString(), Alert.AlertType.INFORMATION)
+            search(stage, searchContent)
+        }
+        searchContent.onKeyPressed = EventHandler {
+            if (it.code == KeyCode.ENTER) {
+                search(stage, searchContent)
             }
-            searchContent.clear()
-            searchContent.requestFocus()
         }
         stage.scene = Scene(vBox, APP_WIDTH, APP_HEIGHT)
+    }
+
+    private fun search(stage: Stage, searchContent: TextField) {
+        val userList = repository.search(searchContent.text)
+        if (userList.isEmpty()) {
+            showAlert(stage, strings.getString(NOT_FOUND), Alert.AlertType.WARNING)
+        } else {
+            showAlert(stage, userList.toUserListString(), Alert.AlertType.INFORMATION)
+        }
+        searchContent.clear()
+        searchContent.requestFocus()
     }
 
     private fun startCreate(stage: Stage) {
