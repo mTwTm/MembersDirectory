@@ -79,28 +79,38 @@ class MainApp : Application() {
         stage.title = strings.getString(CREATE)
         stage.scene = Scene(vBox, APP_WIDTH, APP_HEIGHT)
         button.onMouseClicked = EventHandler {
-            if (checkInputNonEmpty(cardIdField, nameField, phoneField)) {
-                showAlert(stage, strings.getString(EMPTY_FIELD), Alert.AlertType.WARNING)
-            } else {
-                insertUser(stage,
-                    User(
-                        cardIdField.text,
-                        nameField.text,
-                        phoneField.text,
-                        otherField.text,
-                        System.currentTimeMillis()
-                    )
+            create(stage, cardIdField.text, nameField.text, phoneField.text, otherField.text)
+        }
+    }
+
+    private fun create(
+        stage: Stage,
+        cardIdText: String,
+        nameText: String,
+        phoneText: String,
+        otherText: String
+    ) {
+        if (checkInputNonEmpty(cardIdText, nameText, phoneText)) {
+            showAlert(stage, strings.getString(EMPTY_FIELD), Alert.AlertType.WARNING)
+        } else {
+            insertUser(stage,
+                User(
+                    cardIdText,
+                    nameText,
+                    phoneText,
+                    otherText,
+                    System.currentTimeMillis()
                 )
-            }
+            )
         }
     }
 
     private fun checkInputNonEmpty(
-        cardIdField: TextField,
-        nameField: TextField,
-        phoneField: TextField
+        cardIdField: String,
+        nameField: String,
+        phoneField: String
     ): Boolean {
-        return cardIdField.text.isEmpty() || nameField.text.isEmpty() || phoneField.text.isEmpty()
+        return cardIdField.isEmpty() || nameField.isEmpty() || phoneField.isEmpty()
     }
 
     private fun insertUser(stage: Stage, user: User) {
